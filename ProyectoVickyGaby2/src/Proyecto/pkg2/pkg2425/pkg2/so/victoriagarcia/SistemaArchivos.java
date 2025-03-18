@@ -9,10 +9,7 @@ import Functions.TablaAsignacionArchivos;
 import MainClass.Archivo;
 import MainClass.Directorio;
 
-/**
- *
- * @author Moises Liota
- */
+
 public class SistemaArchivos {
     private Directorio raiz;
     private SimulacionDisco disco;

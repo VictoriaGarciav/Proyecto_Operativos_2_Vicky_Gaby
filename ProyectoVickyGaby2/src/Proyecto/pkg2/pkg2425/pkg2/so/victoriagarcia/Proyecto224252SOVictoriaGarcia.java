@@ -4,10 +4,7 @@
  */
 package proyecto.pkg2.pkg2425.pkg2.so.victoriagarcia;
 
-/**
- *
- * @author Moises Liota
- */
+
 public class Proyecto224252SOVictoriaGarcia {
 
     /**
