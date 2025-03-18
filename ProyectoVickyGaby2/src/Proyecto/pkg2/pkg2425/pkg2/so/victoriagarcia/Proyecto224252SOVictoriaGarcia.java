@@ -4,12 +4,9 @@
  */
 package proyecto.pkg2.pkg2425.pkg2.so.victoriagarcia;
 
-<<<<<<< Updated upstream
-
-=======
 import javax.swing.JFrame;
 import Interfaces.Pantalla;
->>>>>>> Stashed changes
+
 public class Proyecto224252SOVictoriaGarcia {
 
     /**
