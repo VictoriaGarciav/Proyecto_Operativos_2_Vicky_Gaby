@@ -4,7 +4,12 @@
  */
 package proyecto.pkg2.pkg2425.pkg2.so.victoriagarcia;
 
+<<<<<<< Updated upstream
 
+=======
+import javax.swing.JFrame;
+import Interfaces.Pantalla;
+>>>>>>> Stashed changes
 public class Proyecto224252SOVictoriaGarcia {
 
     /**
@@ -12,6 +17,16 @@ public class Proyecto224252SOVictoriaGarcia {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-    }
+        
+        Pantalla appWindow = new Pantalla();
+        java.awt.EventQueue.invokeLater(new Runnable()  {
+            public void run() {
+                appWindow.setVisible(true);
+            }
+        
+        
+         
+         });
     
+    }
 }
