@@ -4,10 +4,7 @@
  */
 package MainClass;
 
-/**
- *
- * @author Moises Liota
- */
+
 public class Bloque {
     private int id;
     private int siguiente; // Puntero al siguiente bloque (-1 si es el último)

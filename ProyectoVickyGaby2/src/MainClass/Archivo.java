@@ -4,10 +4,7 @@
  */
 package MainClass;
 
-/**
- *
- * @author Moises Liota
- */
+
 public class Archivo {
     private String nombre;
     private int tamaño; // En bloques
