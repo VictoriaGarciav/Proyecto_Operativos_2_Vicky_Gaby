@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package proyecto.pkg2.pkg2425.pkg2.so.victoriagarcia;
+package MainClass;
 
 import Functions.SimulacionDisco;
 import Functions.TablaAsignacionArchivos;
@@ -51,20 +51,20 @@ public class SistemaArchivos {
         return esAdministrador;
     }
 
-    public void cambiarModo(boolean administrador) {
-        this.esAdministrador = administrador;
+    public void cambiarModo() {
+        this.esAdministrador = !this.esAdministrador;
     }
 
-    public void crearArchivo(String ruta, String nombre, int tamaño, String permisos) {
+    public boolean crearArchivo(String ruta, String nombre, int tamaño, String permisos) {
         if (!esAdministrador) {
             System.out.println("Acceso denegado. Solo el administrador puede crear archivos.");
-            return;
+            return false;
         }
 
         int primerBloque = disco.asignarBloques(tamaño);
         if (primerBloque == -1) {
             System.out.println("No hay espacio suficiente en el disco.");
-            return;
+            return false;
         }
 
         Archivo nuevoArchivo = new Archivo(nombre, tamaño, primerBloque, permisos);
@@ -74,8 +74,10 @@ public class SistemaArchivos {
             directorio.agregarArchivo(nuevoArchivo);
             tablaAsignacion.agregarEntrada(nombre, tamaño, primerBloque);
             System.out.println("Archivo creado exitosamente.");
+            return true;
         } else {
             System.out.println("El directorio especificado no existe.");
+            return false;
         }
     }
 
