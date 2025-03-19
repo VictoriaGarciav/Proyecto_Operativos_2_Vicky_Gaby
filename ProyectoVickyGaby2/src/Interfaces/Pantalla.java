@@ -1,15 +1,14 @@
 package Interfaces;
 
+
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
 import MainClass.SistemaArchivos;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
 // Proyecto.pkg2.pkg2425.pkg2.so.victoriagarcia.Proyecto224252SOVictoriaGarcia.java;
@@ -20,14 +19,14 @@ public class Pantalla extends javax.swing.JFrame {
      * Creates new form Pantalla
      */
     public SistemaArchivos sistema;
+    public DefaultMutableTreeNode root;
     
     public Pantalla( SistemaArchivos sistema) {
+        root = new DefaultMutableTreeNode(sistema.getRaiz().getNombre());
         initComponents();
         this.setLocationRelativeTo(null);
         this.sistema = sistema;
         jlabelAdminUser.setText("MODO: USUARIO");
-        
-        
         
         
     }
@@ -52,7 +51,7 @@ public class Pantalla extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtreeArchivos = new javax.swing.JTree();
+        jtreeArchivos = new javax.swing.JTree(root);
         jSpinnerTamanoArchivo = new javax.swing.JSpinner();
         jButton3 = new javax.swing.JButton();
         jlabelAdminUser = new javax.swing.JLabel();
@@ -153,7 +152,6 @@ public class Pantalla extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 19, Short.MAX_VALUE)
                                 .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(12, 12, 12)
@@ -261,11 +259,7 @@ public class Pantalla extends javax.swing.JFrame {
                 }
 
             }
-        }
-   
-        
-  
-        
+        }  
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -340,4 +334,4 @@ public class Pantalla extends javax.swing.JFrame {
     private javax.swing.JLabel jlabelCrearArchivo;
     private javax.swing.JTree jtreeArchivos;
     // End of variables declaration//GEN-END:variables
-
+}
