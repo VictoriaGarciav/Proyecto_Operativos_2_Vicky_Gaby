@@ -22,7 +22,7 @@ public class Pantalla extends javax.swing.JFrame {
     public DefaultMutableTreeNode root;
     
     public Pantalla( SistemaArchivos sistema) {
-        root = new DefaultMutableTreeNode(sistema.getRaiz().getNombre());
+        root = new DefaultMutableTreeNode(sistema.getRaiz().getNombre()); 
         initComponents();
         this.setLocationRelativeTo(null);
         this.sistema = sistema;
@@ -116,7 +116,7 @@ public class Pantalla extends javax.swing.JFrame {
 
         jLabel6.setText("Nombre:");
 
-        jlabelCrearArchivo.setText("jLabel7");
+        jlabelCrearArchivo.setText("Status: OK");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

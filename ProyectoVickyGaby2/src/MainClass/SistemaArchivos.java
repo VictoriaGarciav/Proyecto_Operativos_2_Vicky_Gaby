@@ -147,11 +147,13 @@ public class SistemaArchivos {
     }
 
     private Directorio buscarDirectorio(String ruta) {
+        ruta = ruta.replace("[", "");
+        ruta = ruta.replace("]", "");
         if (ruta.equals("root")) {
             return raiz;
         }
 
-        String[] partes = ruta.split("/");
+        String[] partes = ruta.split(",");
         Directorio actual = raiz;
 
         for (String parte : partes) {
