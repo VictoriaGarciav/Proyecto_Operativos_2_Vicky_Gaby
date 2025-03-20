@@ -253,12 +253,13 @@ public class Pantalla extends javax.swing.JFrame {
                 ,tamano, permisos);
 
                 if (status){
+                    //agregar el nodo nuevo al jtree: crear un DefaultMutableTreeNode y agregarlo como hijo al nodo correspondiente
                     jlabelCrearArchivo.setText("Creado con exito");
                 }else{
                    jlabelCrearArchivo.setText("Error al crear");
                 }
 
-            }
+            }//if combobox = eliminar o if combobox = leer o if combobox = editar
         }  
     }//GEN-LAST:event_jButton2ActionPerformed
 
