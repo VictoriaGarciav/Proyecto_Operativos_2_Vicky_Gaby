@@ -9,6 +9,7 @@ package Interfaces;
 
 import MainClass.SistemaArchivos;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
 
 // Proyecto.pkg2.pkg2425.pkg2.so.victoriagarcia.Proyecto224252SOVictoriaGarcia.java;
@@ -221,6 +222,69 @@ public class Pantalla extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        String permisos;
+        TreePath tp = jtreeArchivos.getSelectionPath();
+        if(tp != null){
+            String ruta = tp.toString();
+            if (sistema.isEsAdministrador()){
+                    permisos = "RW";
+                }else{
+                    permisos = "C";
+                }
+            if (ComboBoxCRUD.getSelectedItem() == "Crear"){
+                boolean status;
+                
+                int tamano = (int) jSpinnerTamanoArchivo.getValue();
+                
+                    
+                status = sistema.crearDirectorio(ruta,jTextFieldNombreB.getText()
+                ,tamano, permisos);
+
+                if (status){
+
+                    //agregar el nodo nuevo al jtree: crear un DefaultMutableTreeNode y agregarlo como hijo al nodo correspondiente
+                    jlabelCrearArchivo.setText("Directorio Creado con exito");
+                }else{
+                   jlabelCrearArchivo.setText("Error al crear Directorio");
+                }
+
+            }
+            if (ComboBoxCRUD.getSelectedItem() == "Eliminar"){
+                boolean status;
+                
+                int tamano = (int) jSpinnerTamanoArchivo.getValue();
+                
+                    
+                status = sistema.eliminarDirectorio(ruta,jTextFieldNombreB.getText()
+                ,tamano, permisos);
+
+                if (status){
+                 
+                    jlabelCrearArchivo.setText("Directorio Eliminado con exito");
+                }else{
+                   jlabelCrearArchivo.setText("Error al eiminar Directorio");
+                }
+
+            }
+//            if (ComboBoxCRUD.getSelectedItem() == "Actualizar"){
+//                boolean status;
+//                
+//                int tamano = (int) jSpinnerTamanoArchivo.getValue();
+//                
+//                    
+//                status = sistema.eliminarArchivo(ruta,jTextFieldNombreB.getText()
+//                ,tamano, permisos);
+//
+//                if (status){
+//                 
+//                    jlabelCrearArchivo.setText("Editado con exito");
+//                }else{
+//                   jlabelCrearArchivo.setText("Error al editar");
+//                }
+//
+//            }
+            //if combobox = eliminar o if combobox = leer o if combobox = editar
+        }                                       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void ComboBoxCRUDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxCRUDActionPerformed
@@ -253,13 +317,53 @@ public class Pantalla extends javax.swing.JFrame {
                 ,tamano, permisos);
 
                 if (status){
+//                    DefaultMutableTreeNode parent= new DefaultMutableTreeNode("Parent ");
+//                    parent = new DefaultMutableTreeNode(sistema.getRaiz().getNombre()); 
+//                    MutableTreeNode child = null;
+//                    parent.add(child);
+//                    
                     //agregar el nodo nuevo al jtree: crear un DefaultMutableTreeNode y agregarlo como hijo al nodo correspondiente
                     jlabelCrearArchivo.setText("Creado con exito");
                 }else{
                    jlabelCrearArchivo.setText("Error al crear");
                 }
 
-            }//if combobox = eliminar o if combobox = leer o if combobox = editar
+            }
+            if (ComboBoxCRUD.getSelectedItem() == "Eliminar"){
+                boolean status;
+                
+                int tamano = (int) jSpinnerTamanoArchivo.getValue();
+                
+                    
+                status = sistema.eliminarArchivo(ruta,jTextFieldNombreB.getText()
+                ,tamano, permisos);
+
+                if (status){
+                 
+                    jlabelCrearArchivo.setText("Eliminado con exito");
+                }else{
+                   jlabelCrearArchivo.setText("Error al eiminar");
+                }
+
+            }
+//            if (ComboBoxCRUD.getSelectedItem() == "Actualizar"){
+//                boolean status;
+//                
+//                int tamano = (int) jSpinnerTamanoArchivo.getValue();
+//                
+//                    
+//                status = sistema.eliminarArchivo(ruta,jTextFieldNombreB.getText()
+//                ,tamano, permisos);
+//
+//                if (status){
+//                 
+//                    jlabelCrearArchivo.setText("Editado con exito");
+//                }else{
+//                   jlabelCrearArchivo.setText("Error al editar");
+//                }
+//
+//            }
+            //if combobox = eliminar o if combobox = leer o if combobox = editar
         }  
     }//GEN-LAST:event_jButton2ActionPerformed
 

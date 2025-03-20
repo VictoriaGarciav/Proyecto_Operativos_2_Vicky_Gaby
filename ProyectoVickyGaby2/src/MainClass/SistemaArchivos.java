@@ -81,10 +81,10 @@ public class SistemaArchivos {
         }
     }
 
-    public void eliminarArchivo(String ruta, String nombre) {
+    public boolean eliminarArchivo(String ruta, String nombre, int tamaño, String permisos) {
         if (!esAdministrador) {
             System.out.println("Acceso denegado. Solo el administrador puede eliminar archivos.");
-            return;
+            return false;
         }
 
         Directorio directorio = buscarDirectorio(ruta);
@@ -101,12 +101,13 @@ public class SistemaArchivos {
         } else {
             System.out.println("El directorio especificado no existe.");
         }
+        return false;
     }
 
-    public void crearDirectorio(String ruta, String nombre) {
+    public boolean crearDirectorio(String ruta, String nombre, int tamaño, String permisos) {
         if (!esAdministrador) {
             System.out.println("Acceso denegado. Solo el administrador puede crear directorios.");
-            return;
+            return false;
         }
 
         Directorio directorioPadre = buscarDirectorio(ruta);
@@ -117,12 +118,13 @@ public class SistemaArchivos {
         } else {
             System.out.println("El directorio especificado no existe.");
         }
+        return false;
     }
 
-    public void eliminarDirectorio(String ruta, String nombre) {
+    public boolean eliminarDirectorio(String ruta, String nombre, int tamaño, String permisos) {
         if (!esAdministrador) {
             System.out.println("Acceso denegado. Solo el administrador puede eliminar directorios.");
-            return;
+            return false;
         }
 
         Directorio directorioPadre = buscarDirectorio(ruta);
@@ -132,6 +134,7 @@ public class SistemaArchivos {
         } else {
             System.out.println("El directorio especificado no existe.");
         }
+        return false;
     }
 
     public void mostrarEstructura() {
