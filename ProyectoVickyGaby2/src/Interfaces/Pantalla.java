@@ -18,6 +18,7 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
+
 // Proyecto.pkg2.pkg2425.pkg2.so.victoriagarcia.Proyecto224252SOVictoriaGarcia.java;
 
 public class Pantalla extends javax.swing.JFrame {
@@ -130,10 +131,8 @@ public class Pantalla extends javax.swing.JFrame {
 
         jlabelCrearArchivo.setText("Status: OK");
 
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Actualizar:");
 
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Nuevo Nombre:");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -151,7 +150,7 @@ public class Pantalla extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable1);
 
-        jButtonTransfer.setText("jButton4");
+        jButtonTransfer.setText("Generar Bloques");
         jButtonTransfer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonTransferActionPerformed(evt);
@@ -166,7 +165,7 @@ public class Pantalla extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 6, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
@@ -174,57 +173,58 @@ public class Pantalla extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(12, 12, 12)
                                         .addComponent(jlabelCrearArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(93, 93, 93))
+                                        .addGap(109, 109, 109))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jButton1)
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jButton2)
-                                        .addGap(43, 43, 43))))
+                                        .addGap(59, 59, 59))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
+                                .addGap(181, 181, 181))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jlabelAdminUser, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jlabelAdminUser)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButtonTransfer))
+                                .addGap(131, 131, 131)
+                                .addComponent(jLabel5))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addGap(131, 131, 131)
-                                        .addComponent(jLabel5))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addGap(37, 37, 37)
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jSpinnerTamanoArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addGap(43, 43, 43)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                                    .addComponent(jLabel6)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                    .addComponent(jTextFieldNombreB, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addComponent(ComboBoxCRUD, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                        .addGap(9, 9, 9)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jButton3)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel8)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(NuevoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(18, 18, 18)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                .addGap(37, 37, 37)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSpinnerTamanoArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGap(43, 43, 43)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel6)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jTextFieldNombreB, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(ComboBoxCRUD, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton3)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel8)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(NuevoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(61, 61, Short.MAX_VALUE)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(154, 154, 154))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(175, 175, 175)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(283, 283, 283)
+                        .addComponent(jButtonTransfer)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,11 +264,11 @@ public class Pantalla extends javax.swing.JFrame {
                         .addComponent(jButton3)
                         .addGap(18, 18, 18)
                         .addComponent(jlabelAdminUser)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonTransfer)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(252, 252, 252))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(jButtonTransfer)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(197, 197, 197))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -757,73 +757,84 @@ public class Pantalla extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButtonTransferActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTransferActionPerformed
-        // TODO add your handling code here:
-        // Asumiendo que ya tienes el modelo del árbol y el modelo de la tabla como los siguientes:
+
+        // Obtener los modelos del árbol y la tabla
         DefaultTreeModel treeModel = (DefaultTreeModel) jtreeArchivos.getModel();
         DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
 
-        // Establecer las columnas de la tabla, en este caso las columnas podrían ser "Nombre", "Tamaño", "Permisos"
-        String[] columnNames = {"Nombre", "Tamaño", "Permisos"};
+        // Definir columnas con numeración y estado
+        String[] columnNames = {"#", "Nombre", "Dirección", "Tamaño", "Estado"};
         tableModel.setColumnIdentifiers(columnNames);
 
-        // Limpiar cualquier dato previo
+        // Limpiar la tabla antes de actualizarla
         tableModel.setRowCount(0);
 
         // Obtener la raíz del árbol
         DefaultMutableTreeNode root = (DefaultMutableTreeNode) treeModel.getRoot();
+    
+        int contador = 1; // Contador de numeración
+        final int MAX_BLOQUES = 20; // Límite de bloques
+        boolean[] bloques = new boolean[MAX_BLOQUES]; // True = ocupado, False = libre
 
-        // Primero, agregar los archivos que están directamente en la raíz (sin directorios)
+        // Agregar archivos de la raíz
         for (int i = 0; i < treeModel.getChildCount(root); i++) {
+            if (contador > MAX_BLOQUES) break; // Evita superar los 20 bloques
+
+        DefaultMutableTreeNode node1 = (DefaultMutableTreeNode) root.getChildAt(i);
+
+        if (node1.getChildCount() == 0) { // Si es un archivo sin hijos
+            String nodeInfo = node1.getUserObject().toString();
+            String[] parts = nodeInfo.split(" \\(");
+            String nombre = parts[0].trim();
+            String info = parts.length > 1 ? parts[1].replace(")", "").trim() : "";
+
+            String[] infoParts = info.split(", ");
+            String tamano = infoParts.length > 0 ? infoParts[0].replace("Dirección: ", "") : "N/A";
+            String permisos = infoParts.length > 1 ? infoParts[1].replace("Tamaño: ", "") : "N/A";
+
+            bloques[contador - 1] = true; // Marcar bloque como ocupado
+            String estado = "Ocupado";
+
+            // Agregar fila con numeración y estado
+            tableModel.addRow(new Object[]{contador++, nombre, tamano, permisos, estado});
+        }
+    }
+
+        // Recorrer directorios y agregar sus archivos
+        for (int i = 0; i < treeModel.getChildCount(root); i++) {
+            if (contador > MAX_BLOQUES) break; // Evita superar los 20 bloques
+
             DefaultMutableTreeNode node1 = (DefaultMutableTreeNode) root.getChildAt(i);
 
-            // Verificar si este es un archivo (no tiene hijos)
-            if (node1.getChildCount() == 0) {
-                String nodeInfo = node1.getUserObject().toString();
-                String[] parts = nodeInfo.split(" \\(");  // Separar nombre y detalles
+            if (node1.getChildCount() > 0) { // Si es un directorio con archivos
+                for (int j = 0; j < node1.getChildCount(); j++) {
+                    if (contador > MAX_BLOQUES) break; // Evita superar los 20 bloques
+
+                DefaultMutableTreeNode node2 = (DefaultMutableTreeNode) node1.getChildAt(j);
+
+                String nodeInfo = node2.getUserObject().toString();
+                String[] parts = nodeInfo.split(" \\(");
                 String nombre = parts[0].trim();
                 String info = parts.length > 1 ? parts[1].replace(")", "").trim() : "";
 
-                // Dividir la información del archivo (tamaño y permisos)
                 String[] infoParts = info.split(", ");
-                String tamano = infoParts.length > 0 ? infoParts[0].replace("Tamaño: ", "") : "N/A";
-                String permisos = infoParts.length > 1 ? infoParts[1].replace("Permiso: ", "") : "N/A";
+                String tamano = infoParts.length > 0 ? infoParts[0].replace("Dirección: ", "") : "N/A";
+                String permisos = infoParts.length > 1 ? infoParts[1].replace("Tamaño: ", "") : "N/A";
 
-                // Crear una fila con los valores extraídos
-                Object[] row = { nombre, tamano, permisos };
+                bloques[contador - 1] = true; // Marcar bloque como ocupado
+                String estado = "Ocupado";
 
-                // Agregar la fila al modelo de la tabla
-                tableModel.addRow(row);
+                // Agregar fila con numeración y estado
+                tableModel.addRow(new Object[]{contador++, nombre, tamano, permisos, estado});
             }
         }
+    }
 
-        // Ahora recorrer los nodos de directorios y agregar sus archivos
-        for (int i = 0; i < treeModel.getChildCount(root); i++) {
-            DefaultMutableTreeNode node1 = (DefaultMutableTreeNode) root.getChildAt(i);
-
-            // Verificar si el nodo tiene hijos (es un directorio con archivos)
-            if (node1.getChildCount() > 0) {
-                for (int j = 0; j < node1.getChildCount(); j++) {
-                    DefaultMutableTreeNode node2 = (DefaultMutableTreeNode) node1.getChildAt(j);
-
-                    // Suponiendo que el nombre del nodo tiene un formato: "Archivo1.txt (Tamaño: 10, Permiso: RW)"
-                    String nodeInfo = node2.getUserObject().toString();
-                    String[] parts = nodeInfo.split(" \\(");  // Separar nombre y detalles
-                    String nombre = parts[0].trim();
-                    String info = parts.length > 1 ? parts[1].replace(")", "").trim() : "";
-
-                    // Dividir la información del archivo (tamaño y permisos)
-                    String[] infoParts = info.split(", ");
-                    String tamano = infoParts.length > 0 ? infoParts[0].replace("Tamaño: ", "") : "N/A";
-                    String permisos = infoParts.length > 1 ? infoParts[1].replace("Permiso: ", "") : "N/A";
-
-                    // Crear una fila con los valores extraídos
-                    Object[] row = { nombre, tamano, permisos };
-
-                    // Agregar la fila al modelo de la tabla
-                    tableModel.addRow(row);
-                }
-            }
-        }
+        // Llenar los bloques vacíos con estado "Libre"
+        while (contador <= MAX_BLOQUES) {
+            tableModel.addRow(new Object[]{contador, "Bloque " + contador, "-", "-", "Libre"});
+            contador++;
+    }
     }//GEN-LAST:event_jButtonTransferActionPerformed
 
     /**
