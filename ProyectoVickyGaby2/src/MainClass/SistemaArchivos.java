@@ -222,4 +222,21 @@ public class SistemaArchivos {
         }
         return null;
     }
+    
+    public boolean actualizarArchivo(String ruta, String nombreArchivo, String nuevoNombre, int nuevoTamano, String permisos) {
+        Directorio directorioPadre = buscarDirectorio(ruta);  // Asegúrate de que la ruta sea correcta
+        if (directorioPadre != null) {
+            Archivo archivo = obtenerArchivo(directorioPadre, nombreArchivo);
+            if (archivo != null) {
+                archivo.setNombre(nuevoNombre);
+                archivo.setTamaño(nuevoTamano);
+                archivo.setPermisos(permisos);
+                return true;
+            } else {
+                System.out.println("El archivo no se encontró para actualizar.");
+                return false;
+            }
+        }
+        return false;
+    }
 }

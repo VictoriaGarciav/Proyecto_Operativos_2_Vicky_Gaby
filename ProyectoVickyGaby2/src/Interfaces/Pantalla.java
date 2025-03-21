@@ -400,7 +400,7 @@ public class Pantalla extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         //If combobox Crear sistema.crearArchivo 2cosas:
-        String permisos;
+        String permisos = null;
         TreePath tp = jtreeArchivos.getSelectionPath();
 
         if (tp != null) {
@@ -497,7 +497,54 @@ public class Pantalla extends javax.swing.JFrame {
                 jlabelCrearArchivo.setText("Selecciona un directorio para eliminar el archivo");
             }
         
-        
+            if (ComboBoxCRUD.getSelectedItem().toString().equals("Actualizar")) {
+                if (tp != null) {
+                    DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
+                    String nombreDirectorio = selectedNode.toString(); // El directorio o archivo seleccionado
+                    String ruta = nombreDirectorio;
+
+                    // Nuevos datos a actualizar
+                    String nombreArchivo = jTextFieldNombreB.getText().trim(); // Nombre del archivo a actualizar
+                    String nuevoNombre = NuevoNombre.getText(); // Nuevo nombre del archivo
+                    int nuevoTamano = (int) jSpinnerTamanoArchivo.getValue(); // Nuevo tamaño
+
+                    if (!nombreArchivo.isEmpty() && !nuevoNombre.isEmpty()) {
+                        // Llamar al método actualizar en el sistema
+                        boolean status = sistema.actualizarArchivo(ruta, nombreArchivo, nuevoNombre, nuevoTamano, permisos);
+
+                        if (status) {
+                            // Si el sistema lo actualiza, actualizamos el nombre del nodo en el JTree
+                            Enumeration<TreeNode> children = selectedNode.children();
+                            boolean found = false;
+
+                            while (children.hasMoreElements()) {
+                                DefaultMutableTreeNode child = (DefaultMutableTreeNode) children.nextElement();
+                                if (child.toString().equalsIgnoreCase(nombreArchivo)) {
+                                    // Cambiar el nombre del nodo al nuevo nombre
+                                    child.setUserObject(nuevoNombre);
+                                    found = true;
+                                    break;
+                                }
+                            }
+
+                            // Recargamos el modelo del árbol para ver los cambios
+                            if (found) {
+                                DefaultTreeModel model = (DefaultTreeModel) jtreeArchivos.getModel();
+                                model.reload(selectedNode);
+                                jlabelCrearArchivo.setText("Archivo actualizado con éxito");
+                            } else {
+                                jlabelCrearArchivo.setText("Archivo actualizado en el sistema, pero no encontrado en el árbol");
+                            }
+                        } else {
+                            jlabelCrearArchivo.setText("Error al actualizar el archivo");
+                        }
+                    } else {
+                        jlabelCrearArchivo.setText("Ingresa el nombre actual y el nuevo nombre del archivo");
+                    }
+                } else {
+                    jlabelCrearArchivo.setText("Selecciona un directorio o archivo para actualizar");
+                }
+            }
 //            if (ComboBoxCRUD.getSelectedItem() == "Actualizar"){
 //                boolean status;
 //                
