@@ -122,7 +122,7 @@ public class SistemaArchivos {
         return false;
     }
 
-    public boolean eliminarDirectorio(String ruta, String nombre, int tamaño, String permisos) {
+    public boolean eliminarDirectorio(String ruta, String nombre) {
         if (!esAdministrador) {
             System.out.println("Acceso denegado. Solo el administrador puede eliminar directorios.");
             return false;
@@ -132,10 +132,12 @@ public class SistemaArchivos {
         if (directorioPadre != null) {
             directorioPadre.eliminarSubdirectorio(nombre);
             System.out.println("Directorio eliminado exitosamente.");
+            return true;
         } else {
             System.out.println("El directorio especificado no existe.");
+            return false;
         }
-        return false;
+        
     }
 
     public void mostrarEstructura() {

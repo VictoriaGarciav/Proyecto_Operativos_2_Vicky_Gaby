@@ -54,14 +54,15 @@ public class Directorio {
         subdirectorios.InsertarFinal(dir);
     }
 
-    public void eliminarSubdirectorio(String nombreSubdir) {
+    public boolean eliminarSubdirectorio(String nombreSubdir) {
         for (int i = 0; i < subdirectorios.getSize(); i++) {
             Directorio dir = (Directorio) subdirectorios.get(i);
             if (dir.getNombre().equals(nombreSubdir)) {
                 subdirectorios.EliminarPorReferencia(dir);
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     public void mostrarEstructura() {

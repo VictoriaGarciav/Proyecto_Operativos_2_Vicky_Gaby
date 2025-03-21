@@ -267,6 +267,40 @@ public class Pantalla extends javax.swing.JFrame {
                 }
             }
         }
+            if (ComboBoxCRUD.getSelectedItem().toString().equals("Eliminar")) {
+                
+
+                if (tp != null) {
+                    // Obtenemos el nodo seleccionado (el directorio que se quiere eliminar)
+                    DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
+
+                    // Obtenemos el modelo del árbol y la raíz
+                    DefaultTreeModel model = (DefaultTreeModel) jtreeArchivos.getModel();
+                    DefaultMutableTreeNode root = (DefaultMutableTreeNode) model.getRoot();
+
+                    // Obtenemos el nombre del directorio a eliminar
+                    String nombreDirectorio = selectedNode.toString();
+
+                    // Como todo está colgado del root, la ruta es "root"
+                    String ruta = "root";
+
+                    // Llamamos al backend para eliminar el directorio
+                    boolean status = sistema.eliminarDirectorio(ruta, nombreDirectorio);
+
+                    if (status) {
+                        // Eliminamos el nodo del JTree
+                        root.remove(selectedNode);
+                        model.reload(root);
+
+                        // Mensaje de éxito
+                        jlabelCrearArchivo.setText("Directorio eliminado con éxito");
+                    } else {
+                        jlabelCrearArchivo.setText("Error al eliminar el directorio");
+                    }
+                } else {
+                    jlabelCrearArchivo.setText("Selecciona un directorio para eliminar");
+                }
+            }
         
         
 //            if (ComboBoxCRUD.getSelectedItem() == "Eliminar"){
