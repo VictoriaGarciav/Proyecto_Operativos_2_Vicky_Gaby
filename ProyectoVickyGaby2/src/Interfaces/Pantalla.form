@@ -181,11 +181,13 @@
         <Component class="javax.swing.JComboBox" name="ComboBoxCRUD">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
+              <StringArray count="6">
                 <StringItem index="0" value="Crear"/>
                 <StringItem index="1" value="Leer"/>
                 <StringItem index="2" value="Actualizar"/>
                 <StringItem index="3" value="Eliminar"/>
+                <StringItem index="4" value="Crear Subdirectorio"/>
+                <StringItem index="5" value=" "/>
               </StringArray>
             </Property>
           </Properties>

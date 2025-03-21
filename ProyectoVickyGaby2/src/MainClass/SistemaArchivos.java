@@ -8,6 +8,7 @@ import Functions.SimulacionDisco;
 import Functions.TablaAsignacionArchivos;
 import MainClass.Archivo;
 import MainClass.Directorio;
+import java.io.File;
 
 
 public class SistemaArchivos {
@@ -120,6 +121,37 @@ public class SistemaArchivos {
             System.out.println("El directorio especificado no existe.");
         }
         return false;
+    }
+    public boolean crearSubdirectorio(String ruta, String nombreSubdirectorio) {
+        // Primero, verificar que la ruta no esté vacía
+        if (ruta == null || ruta.isEmpty() || nombreSubdirectorio == null || nombreSubdirectorio.isEmpty()) {
+            return false; // Si la ruta o el nombre están vacíos, retornamos falso
+        }
+
+        // Crear el directorio en el sistema de archivos
+        File directorio = new File(ruta + "/" + nombreSubdirectorio);
+
+        // Verificar si el directorio ya existe
+        if (directorio.exists()) {
+            System.out.println("El subdirectorio ya existe.");
+            return false; // El subdirectorio ya existe, no hacemos nada
+        }
+
+        // Intentamos crear el directorio
+        boolean resultado = directorio.mkdirs();
+
+        if (resultado) {
+            System.out.println("Subdirectorio creado exitosamente en la ruta: " + ruta + "/" + nombreSubdirectorio);
+            return true; // El subdirectorio fue creado con éxito
+        } else {
+            System.out.println("Error al crear el subdirectorio.");
+            return false; // Hubo un problema al crear el subdirectorio
+        }
+    }
+    
+    public boolean existeDirectorio(String ruta) {
+        File dir = new File(ruta);
+        return dir.exists() && dir.isDirectory();
     }
 
     public boolean eliminarDirectorio(String ruta, String nombre) {

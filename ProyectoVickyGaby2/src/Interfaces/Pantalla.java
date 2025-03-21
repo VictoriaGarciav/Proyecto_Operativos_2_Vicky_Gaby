@@ -73,7 +73,7 @@ public class Pantalla extends javax.swing.JFrame {
 
         jLabel1.setText("Seleccionar Opcion");
 
-        ComboBoxCRUD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Crear", "Leer", "Actualizar", "Eliminar" }));
+        ComboBoxCRUD.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Crear", "Leer", "Actualizar", "Eliminar", "Crear Subdirectorio", " " }));
         ComboBoxCRUD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComboBoxCRUDActionPerformed(evt);
@@ -368,27 +368,31 @@ public class Pantalla extends javax.swing.JFrame {
                     String nombreDirectorio = selectedNode.toString();
 
                     // Como lo cuelgas de root, podrías usar "root" o la ruta que construyas
-                    String ruta = "root";
+                    String ruta = "root"; // Podrías construir la ruta completa a partir del árbol, pero "root" es el punto de partida
 
-                    // Buscar el directorio en tu sistema
+                    // Buscar el directorio en tu sistema (esto dependerá de la estructura de tu sistema de archivos)
                     Directorio directorio = sistema.buscarDirectorio(nombreDirectorio);
 
                     if (directorio != null) {
                         StringBuilder contenido = new StringBuilder();
                         contenido.append("Contenido del Directorio '").append(nombreDirectorio).append("':\n");
 
-                        // Listar subdirectorios si tienes
+                        // Listar subdirectorios si existen
                         if (directorio.getSubdirectorios() != null && directorio.getSubdirectorios().getSize() > 0) {
                             contenido.append("Subdirectorios:\n");
                             for (int i = 0; i < directorio.getSubdirectorios().getSize(); i++) {
                                 Directorio sub = (Directorio) directorio.getSubdirectorios().get(i);
                                 contenido.append("- ").append(sub.getNombre()).append("\n");
+
+                                // Añadir subdirectorios al JTree si es necesario
+                                DefaultMutableTreeNode subDirNode = new DefaultMutableTreeNode(sub.getNombre());
+                                selectedNode.add(subDirNode); // Agregar como nodo hijo al nodo actual
                             }
                         } else {
                             contenido.append("No hay subdirectorios\n");
                         }
 
-                        // Listar archivos
+                        // Listar archivos si existen
                         if (directorio.getArchivos() != null && directorio.getArchivos().getSize() > 0) {
                             contenido.append("Archivos:\n");
                             for (int i = 0; i < directorio.getArchivos().getSize(); i++) {
@@ -411,6 +415,50 @@ public class Pantalla extends javax.swing.JFrame {
                     jlabelCrearArchivo.setText("Selecciona un directorio para leer");
                 }
             }
+            if (ComboBoxCRUD.getSelectedItem().toString().equals("Crear Subdirectorio")) {
+                // Obtener el nodo seleccionado en el JTree (el directorio donde se quiere crear el subdirectorio)
+                
+
+                if (tp != null) {
+                    // Obtener el nombre del subdirectorio desde el JTextField
+                    String nombreSubdirectorio = jTextFieldNombreB.getText();
+
+                    // Verificar si el nombre del subdirectorio no está vacío
+                    if (nombreSubdirectorio.isEmpty()) {
+                        jlabelCrearArchivo.setText("El nombre del subdirectorio no puede estar vacío.");
+                        return;
+                    }
+
+                    // Convertir la ruta del directorio seleccionado a una cadena (formato adecuado)
+                    String ruta = tp.toString().replace("[", "").replace("]", "").replace(", ", "/");
+
+                    // Llamar al método crearSubdirectorio para intentar crear el subdirectorio
+                    boolean status = sistema.crearSubdirectorio(ruta, nombreSubdirectorio);
+
+                    if (status) {
+                        // Si el subdirectorio se crea exitosamente en el sistema, agregarlo al JTree
+                        DefaultTreeModel model = (DefaultTreeModel) jtreeArchivos.getModel();
+                        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
+
+                        // Crear el nuevo subdirectorio como un nodo hijo
+                        DefaultMutableTreeNode newDirNode = new DefaultMutableTreeNode(nombreSubdirectorio);
+
+                        // Agregar el subdirectorio como hijo del nodo seleccionado
+                        selectedNode.add(newDirNode);
+
+                        // Recargar el modelo del JTree para reflejar el nuevo subdirectorio
+                        model.reload(selectedNode);
+
+                        // Mostrar mensaje de éxito
+                        jlabelCrearArchivo.setText("Subdirectorio creado con éxito");
+                    } else {
+                        jlabelCrearArchivo.setText("Error al crear subdirectorio");
+                    }
+                } else {
+                    jlabelCrearArchivo.setText("Selecciona un directorio para crear un subdirectorio");
+                }
+            }
+            
 //            if (ComboBoxCRUD.getSelectedItem() == "Eliminar"){
 //                boolean status;
 //                
