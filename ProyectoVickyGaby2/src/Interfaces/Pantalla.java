@@ -758,25 +758,71 @@ public class Pantalla extends javax.swing.JFrame {
 
     private void jButtonTransferActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTransferActionPerformed
         // TODO add your handling code here:
-        
-        DefaultTreeModel treeModel =(DefaultTreeModel)jtreeArchivos.getModel();
-        DefaultTableModel tableModel=(DefaultTableModel)jTable1.getModel();
-        
+        // Asumiendo que ya tienes el modelo del árbol y el modelo de la tabla como los siguientes:
+        DefaultTreeModel treeModel = (DefaultTreeModel) jtreeArchivos.getModel();
+        DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
+
+        // Establecer las columnas de la tabla, en este caso las columnas podrían ser "Nombre", "Tamaño", "Permisos"
+        String[] columnNames = {"Nombre", "Tamaño", "Permisos"};
+        tableModel.setColumnIdentifiers(columnNames);
+
+        // Limpiar cualquier dato previo
+        tableModel.setRowCount(0);
+
+        // Obtener la raíz del árbol
         DefaultMutableTreeNode root = (DefaultMutableTreeNode) treeModel.getRoot();
-        
-        String colName;
-        
-        for (int i=0;i<treeModel.getChildCount(root);i++){
+
+        // Primero, agregar los archivos que están directamente en la raíz (sin directorios)
+        for (int i = 0; i < treeModel.getChildCount(root); i++) {
             DefaultMutableTreeNode node1 = (DefaultMutableTreeNode) root.getChildAt(i);
-            Object row []= new Object [node1.getChildCount()];
-            colName =node1.getUserObject().toString();
-            for (int j =0 ; j < node1.getChildCount();j++){
-                DefaultMutableTreeNode node2 = (DefaultMutableTreeNode) node1.getChildAt(j);
-                row[j]=node2.getUserObject();
-                colName =node2.getUserObject().toString();
-                
+
+            // Verificar si este es un archivo (no tiene hijos)
+            if (node1.getChildCount() == 0) {
+                String nodeInfo = node1.getUserObject().toString();
+                String[] parts = nodeInfo.split(" \\(");  // Separar nombre y detalles
+                String nombre = parts[0].trim();
+                String info = parts.length > 1 ? parts[1].replace(")", "").trim() : "";
+
+                // Dividir la información del archivo (tamaño y permisos)
+                String[] infoParts = info.split(", ");
+                String tamano = infoParts.length > 0 ? infoParts[0].replace("Tamaño: ", "") : "N/A";
+                String permisos = infoParts.length > 1 ? infoParts[1].replace("Permiso: ", "") : "N/A";
+
+                // Crear una fila con los valores extraídos
+                Object[] row = { nombre, tamano, permisos };
+
+                // Agregar la fila al modelo de la tabla
+                tableModel.addRow(row);
             }
-            tableModel.addColumn(colName,row);
+        }
+
+        // Ahora recorrer los nodos de directorios y agregar sus archivos
+        for (int i = 0; i < treeModel.getChildCount(root); i++) {
+            DefaultMutableTreeNode node1 = (DefaultMutableTreeNode) root.getChildAt(i);
+
+            // Verificar si el nodo tiene hijos (es un directorio con archivos)
+            if (node1.getChildCount() > 0) {
+                for (int j = 0; j < node1.getChildCount(); j++) {
+                    DefaultMutableTreeNode node2 = (DefaultMutableTreeNode) node1.getChildAt(j);
+
+                    // Suponiendo que el nombre del nodo tiene un formato: "Archivo1.txt (Tamaño: 10, Permiso: RW)"
+                    String nodeInfo = node2.getUserObject().toString();
+                    String[] parts = nodeInfo.split(" \\(");  // Separar nombre y detalles
+                    String nombre = parts[0].trim();
+                    String info = parts.length > 1 ? parts[1].replace(")", "").trim() : "";
+
+                    // Dividir la información del archivo (tamaño y permisos)
+                    String[] infoParts = info.split(", ");
+                    String tamano = infoParts.length > 0 ? infoParts[0].replace("Tamaño: ", "") : "N/A";
+                    String permisos = infoParts.length > 1 ? infoParts[1].replace("Permiso: ", "") : "N/A";
+
+                    // Crear una fila con los valores extraídos
+                    Object[] row = { nombre, tamano, permisos };
+
+                    // Agregar la fila al modelo de la tabla
+                    tableModel.addRow(row);
+                }
+            }
         }
     }//GEN-LAST:event_jButtonTransferActionPerformed
 
