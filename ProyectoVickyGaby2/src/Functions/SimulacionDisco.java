@@ -62,4 +62,7 @@ public class SimulacionDisco {
             bloques[i].mostrarInfo();
         }
     }
-}
+    
+
+
+    }

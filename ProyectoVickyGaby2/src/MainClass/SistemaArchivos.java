@@ -4,11 +4,14 @@
  */
 package MainClass;
 
+import Functions.EntradaAsignacion;
 import Functions.SimulacionDisco;
 import Functions.TablaAsignacionArchivos;
 import MainClass.Archivo;
 import MainClass.Directorio;
 import java.io.File;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 
 public class SistemaArchivos {
@@ -271,4 +274,40 @@ public class SistemaArchivos {
         }
         return false;
     }
+    public int obtenerPrimerBloque(String nombreArchivo) {
+        for (int i = 0; i < tablaAsignacion.getTabla().getSize(); i++) {
+            EntradaAsignacion entrada = (EntradaAsignacion) tablaAsignacion.getTabla().get(i);
+            if (entrada.getNombreArchivo().equals(nombreArchivo)) {
+                return entrada.getPrimerBloque();
+            }
+        }
+        return -1; // No encontrado
+    }
+   
+    
 }
+//    private void mostrarAsignacionEnJTree() {
+//        DefaultTreeModel treeModel = (DefaultTreeModel) jtreeArchivos.getModel();
+//        DefaultMutableTreeNode root = (DefaultMutableTreeNode) treeModel.getRoot();
+//
+//        // Nodo raíz para la tabla de asignación
+//        DefaultMutableTreeNode tablaNode = new DefaultMutableTreeNode("Tabla de Asignación");
+//
+//        for (int i = 0; i < sistema.getTablaAsignacion().getTabla().getSize(); i++) {
+//            EntradaAsignacion entrada = (EntradaAsignacion) sistema.getTablaAsignacion().getTabla().get(i);
+//
+//            String infoArchivo = entrada.getNombreArchivo() + 
+//                                 " | Bloques: " + entrada.getCantidadBloques() + 
+//                                 " | Primer Bloque: " + entrada.getPrimerBloque();
+//
+//            DefaultMutableTreeNode archivoNode = new DefaultMutableTreeNode(infoArchivo);
+//            tablaNode.add(archivoNode);
+//        }
+//
+//        // Limpiar y agregar la nueva info al árbol
+//        root.removeAllChildren();
+//        root.add(tablaNode);
+//        treeModel.reload();
+//    }
+//    
+

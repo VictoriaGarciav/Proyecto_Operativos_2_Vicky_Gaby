@@ -36,4 +36,10 @@ public class TablaAsignacionArchivos {
             System.out.println("--------------------");
         }
     }
+
+    // ✅ Método Getter que me pediste
+    public Lista getTabla() {
+        return this.tabla;
+    }
 }
+
