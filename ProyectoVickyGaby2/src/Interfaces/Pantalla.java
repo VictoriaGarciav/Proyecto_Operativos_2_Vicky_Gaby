@@ -8,6 +8,7 @@ package Interfaces;
  */
 
 import MainClass.Archivo;
+import MainClass.Directorio;
 import MainClass.SistemaArchivos;
 import java.util.Enumeration;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -360,7 +361,56 @@ public class Pantalla extends javax.swing.JFrame {
                 }
             }
         
-        
+            if (ComboBoxCRUD.getSelectedItem().toString().equals("Leer")) {
+                if (tp != null) {
+                    // Obtener el nodo seleccionado (el directorio que quieres leer)
+                    DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
+                    String nombreDirectorio = selectedNode.toString();
+
+                    // Como lo cuelgas de root, podrías usar "root" o la ruta que construyas
+                    String ruta = "root";
+
+                    // Buscar el directorio en tu sistema
+                    Directorio directorio = sistema.buscarDirectorio(nombreDirectorio);
+
+                    if (directorio != null) {
+                        StringBuilder contenido = new StringBuilder();
+                        contenido.append("Contenido del Directorio '").append(nombreDirectorio).append("':\n");
+
+                        // Listar subdirectorios si tienes
+                        if (directorio.getSubdirectorios() != null && directorio.getSubdirectorios().getSize() > 0) {
+                            contenido.append("Subdirectorios:\n");
+                            for (int i = 0; i < directorio.getSubdirectorios().getSize(); i++) {
+                                Directorio sub = (Directorio) directorio.getSubdirectorios().get(i);
+                                contenido.append("- ").append(sub.getNombre()).append("\n");
+                            }
+                        } else {
+                            contenido.append("No hay subdirectorios\n");
+                        }
+
+                        // Listar archivos
+                        if (directorio.getArchivos() != null && directorio.getArchivos().getSize() > 0) {
+                            contenido.append("Archivos:\n");
+                            for (int i = 0; i < directorio.getArchivos().getSize(); i++) {
+                                Archivo archivo = (Archivo) directorio.getArchivos().get(i);
+                                contenido.append("- ").append(archivo.getNombre())
+                                         .append(" | Tamaño: ").append(archivo.getTamaño())
+                                         .append(" | Permisos: ").append(archivo.getPermisos()).append("\n");
+                            }
+                        } else {
+                            contenido.append("No hay archivos\n");
+                        }
+
+                        // Mostrar el contenido en el JLabel o consola
+                        jlabelCrearArchivo.setText("<html>" + contenido.toString().replace("\n", "<br>") + "</html>");
+                        System.out.println(contenido.toString()); // También puedes imprimirlo en consola
+                    } else {
+                        jlabelCrearArchivo.setText("No se encontró el directorio");
+                    }
+                } else {
+                    jlabelCrearArchivo.setText("Selecciona un directorio para leer");
+                }
+            }
 //            if (ComboBoxCRUD.getSelectedItem() == "Eliminar"){
 //                boolean status;
 //                
