@@ -320,70 +320,83 @@ public class Pantalla extends javax.swing.JFrame {
         //If combobox Crear sistema.crearArchivo 2cosas:
         String permisos;
         TreePath tp = jtreeArchivos.getSelectionPath();
-        if(tp != null){
-            String ruta = tp.toString();
-            if (sistema.isEsAdministrador()){
-                    permisos = "RW";
-                }else{
-                    permisos = "C";
-                }
-            if (ComboBoxCRUD.getSelectedItem() == "Crear"){
-                boolean status;
-                
-                int tamano = (int) jSpinnerTamanoArchivo.getValue();
-                
-                    
-                status = sistema.crearArchivo(ruta,jTextFieldNombreB.getText()
-                ,tamano, permisos);
 
-                if (status){
-                    
-                    DefaultTreeModel model = (DefaultTreeModel) jtreeArchivos.getModel();
-                    DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
-                    DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(jTextFieldNombreB.getText());
-                    selectedNode.add(newNode);
-                    model.reload(selectedNode);
-//                    
-                    //agregar el nodo nuevo al jtree: crear un DefaultMutableTreeNode y agregarlo como hijo al nodo correspondiente
-                    jlabelCrearArchivo.setText("Creado con exito");
-                }else{
-                   jlabelCrearArchivo.setText("Error al crear");
-                }
+        if (tp != null) {
+            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
+            String nombreDirectorio = selectedNode.toString(); // Nombre del directorio seleccionado
+            String ruta = nombreDirectorio; // Aquí es donde puedes obtener la ruta del directorio.
 
+            // Establecer permisos según si el usuario es administrador o no
+            if (sistema.isEsAdministrador()) {
+                permisos = "RW";
+            } else {
+                permisos = "C";
             }
-            if (ComboBoxCRUD.getSelectedItem() == "Eliminar"){
-                boolean status = sistema.eliminarArchivo(ruta, jTextFieldNombreB.getText(), 0, permisos);
+
+            // Si el ComboBox selecciona "Crear" (para crear archivo)
+            if (ComboBoxCRUD.getSelectedItem().toString().equals("Crear")) {
+                boolean status;
+                int tamano = (int) jSpinnerTamanoArchivo.getValue(); // Tamaño del archivo desde el spinner
+
+                // Llamar al método crearArchivo para crear el archivo en el sistema
+                status = sistema.crearArchivo(ruta, jTextFieldNombreB.getText(), tamano, permisos);
 
                 if (status) {
-                    jlabelCrearArchivo.setText("Eliminado con éxito");
-                    // Obtenemos el nodo seleccionado (el directorio)
+                    // Si el archivo se crea exitosamente en el sistema, agregarlo al JTree
                     DefaultTreeModel model = (DefaultTreeModel) jtreeArchivos.getModel();
-                    DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
-                    // Buscar el hijo con el nombre ingresado
-                    Enumeration<TreeNode> children = selectedNode.children();
-                    boolean found = false;
-                    while (children.hasMoreElements()) {
-                        DefaultMutableTreeNode child = (DefaultMutableTreeNode) children.nextElement();
-                        if (child.toString().equalsIgnoreCase(jTextFieldNombreB.getText().trim())) {
-                            selectedNode.remove(child);
-                            found = true;
-                            break;
-                        }
-                    }    
-                    if (found) {
-                        model.reload(selectedNode); // Recargar el padre para reflejar el cambio
-                    } else {
-                        jlabelCrearArchivo.setText("No se encontró el archivo a eliminar");
-                    }
-                    
-                }else{
-                   jlabelCrearArchivo.setText("Error al eiminar");
-                }
 
+                    // Crear el nuevo archivo como un nodo hijo
+                    DefaultMutableTreeNode newFileNode = new DefaultMutableTreeNode(jTextFieldNombreB.getText());
+
+                    // Agregar el archivo como hijo del directorio seleccionado
+                    selectedNode.add(newFileNode);
+
+                    // Recargar el modelo del JTree para reflejar el nuevo archivo
+                    model.reload(selectedNode);
+
+                    // Mostrar mensaje de éxito
+                    jlabelCrearArchivo.setText("Archivo creado con éxito");
+                } else {
+                    jlabelCrearArchivo.setText("Error al crear archivo");
+                }
             }
         } else {
             jlabelCrearArchivo.setText("Selecciona un directorio");
-    }        
+        }
+    
+//            if (ComboBoxCRUD.getSelectedItem() == "Eliminar"){
+//                boolean status = sistema.eliminarArchivo(ruta, jTextFieldNombreB.getText(), 0, permisos);
+//
+//                if (status) {
+//                    jlabelCrearArchivo.setText("Eliminado con éxito");
+//                    // Obtenemos el nodo seleccionado (el directorio)
+//                    DefaultTreeModel model = (DefaultTreeModel) jtreeArchivos.getModel();
+//                    DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
+//                    // Buscar el hijo con el nombre ingresado
+//                    Enumeration<TreeNode> children = selectedNode.children();
+//                    boolean found = false;
+//                    while (children.hasMoreElements()) {
+//                        DefaultMutableTreeNode child = (DefaultMutableTreeNode) children.nextElement();
+//                        if (child.toString().equalsIgnoreCase(jTextFieldNombreB.getText().trim())) {
+//                            selectedNode.remove(child);
+//                            found = true;
+//                            break;
+//                        }
+//                    }    
+//                    if (found) {
+//                        model.reload(selectedNode); // Recargar el padre para reflejar el cambio
+//                    } else {
+//                        jlabelCrearArchivo.setText("No se encontró el archivo a eliminar");
+//                    }
+//                    
+//                }else{
+//                   jlabelCrearArchivo.setText("Error al eiminar");
+//                }
+//
+//            }
+//        } else {
+//            jlabelCrearArchivo.setText("Selecciona un directorio");
+//    }        
 //            if (ComboBoxCRUD.getSelectedItem() == "Actualizar"){
 //                boolean status;
 //                
