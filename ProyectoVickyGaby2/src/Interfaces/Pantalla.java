@@ -325,7 +325,8 @@ public class Pantalla extends javax.swing.JFrame {
             DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
             String nombreDirectorio = selectedNode.toString(); // Nombre del directorio seleccionado
             String ruta = nombreDirectorio; // Aquí es donde puedes obtener la ruta del directorio.
-
+            
+            
             // Establecer permisos según si el usuario es administrador o no
             if (sistema.isEsAdministrador()) {
                 permisos = "RW";
@@ -360,43 +361,61 @@ public class Pantalla extends javax.swing.JFrame {
                     jlabelCrearArchivo.setText("Error al crear archivo");
                 }
             }
-        } else {
+            } else {
             jlabelCrearArchivo.setText("Selecciona un directorio");
-        }
-    
-//            if (ComboBoxCRUD.getSelectedItem() == "Eliminar"){
-//                boolean status = sistema.eliminarArchivo(ruta, jTextFieldNombreB.getText(), 0, permisos);
-//
-//                if (status) {
-//                    jlabelCrearArchivo.setText("Eliminado con éxito");
-//                    // Obtenemos el nodo seleccionado (el directorio)
-//                    DefaultTreeModel model = (DefaultTreeModel) jtreeArchivos.getModel();
-//                    DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
-//                    // Buscar el hijo con el nombre ingresado
-//                    Enumeration<TreeNode> children = selectedNode.children();
-//                    boolean found = false;
-//                    while (children.hasMoreElements()) {
-//                        DefaultMutableTreeNode child = (DefaultMutableTreeNode) children.nextElement();
-//                        if (child.toString().equalsIgnoreCase(jTextFieldNombreB.getText().trim())) {
-//                            selectedNode.remove(child);
-//                            found = true;
-//                            break;
-//                        }
-//                    }    
-//                    if (found) {
-//                        model.reload(selectedNode); // Recargar el padre para reflejar el cambio
-//                    } else {
-//                        jlabelCrearArchivo.setText("No se encontró el archivo a eliminar");
-//                    }
-//                    
-//                }else{
-//                   jlabelCrearArchivo.setText("Error al eiminar");
-//                }
-//
-//            }
-//        } else {
-//            jlabelCrearArchivo.setText("Selecciona un directorio");
-//    }        
+            }
+        
+        
+            if (ComboBoxCRUD.getSelectedItem().toString().equals("Eliminar")) {
+                // Primero obtenemos el nodo seleccionado (el directorio o archivo)
+                DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
+                String nombreDirectorio = selectedNode.toString(); // Nombre del directorio seleccionado
+                String ruta = nombreDirectorio;
+
+                // Si el archivo está en el directorio y ya tiene el nombre ingresado en el TextField
+                String nombreArchivo = jTextFieldNombreB.getText().trim();  // Nombre del archivo a eliminar
+
+                if (!nombreArchivo.isEmpty()) {
+                    // Comprobar si el archivo existe dentro del directorio
+                    Enumeration<TreeNode> children = selectedNode.children();
+                    boolean found = false;
+
+                    // Buscar en los hijos del nodo seleccionado
+                    while (children.hasMoreElements()) {
+                        DefaultMutableTreeNode child = (DefaultMutableTreeNode) children.nextElement();
+                        if (child.toString().equalsIgnoreCase(nombreArchivo)) {
+                            // Si el archivo es encontrado, se elimina
+                            selectedNode.remove(child);  // Eliminar el hijo (archivo)
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    // Si el archivo fue encontrado y eliminado
+                    if (found) {
+                        // Llamamos al método para eliminar el archivo en el sistema
+                        boolean status = sistema.eliminarArchivo(ruta, nombreArchivo);
+
+                        if (status) {
+                            // Recargamos el modelo del árbol para reflejar la eliminación
+                            DefaultTreeModel model = (DefaultTreeModel) jtreeArchivos.getModel();
+                            model.reload(selectedNode);
+
+                            
+                        } else {
+                            jlabelCrearArchivo.setText("Archivo se elimino,crear otro archivo para ver cambios o actualizar");
+                        }
+                    } else {
+                        jlabelCrearArchivo.setText("No se encontró el archivo para eliminar");
+                    }
+                }else {
+                    jlabelCrearArchivo.setText("Por favor ingresa el nombre del archivo a eliminar");
+                }
+            } else {
+                jlabelCrearArchivo.setText("Selecciona un directorio para eliminar el archivo");
+            }
+        
+        
 //            if (ComboBoxCRUD.getSelectedItem() == "Actualizar"){
 //                boolean status;
 //                

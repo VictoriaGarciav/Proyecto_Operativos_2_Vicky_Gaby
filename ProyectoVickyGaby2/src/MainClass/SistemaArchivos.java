@@ -81,7 +81,7 @@ public class SistemaArchivos {
         }
     }
 
-    public boolean eliminarArchivo(String ruta, String nombre, int tamaño, String permisos) {
+    public boolean eliminarArchivo(String ruta, String nombre) {
         if (!esAdministrador) {
             System.out.println("Acceso denegado. Solo el administrador puede eliminar archivos.");
             return false;
