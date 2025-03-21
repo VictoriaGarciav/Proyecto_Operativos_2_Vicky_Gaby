@@ -9,6 +9,7 @@ package Interfaces;
 
 import MainClass.SistemaArchivos;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
 
@@ -317,10 +318,12 @@ public class Pantalla extends javax.swing.JFrame {
                 ,tamano, permisos);
 
                 if (status){
-//                    DefaultMutableTreeNode parent= new DefaultMutableTreeNode("Parent ");
-//                    parent = new DefaultMutableTreeNode(sistema.getRaiz().getNombre()); 
-//                    MutableTreeNode child = null;
-//                    parent.add(child);
+                    
+                    DefaultTreeModel model = (DefaultTreeModel) jtreeArchivos.getModel();
+                    DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
+                    DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(jTextFieldNombreB.getText());
+                    selectedNode.add(newNode);
+                    model.reload(selectedNode);
 //                    
                     //agregar el nodo nuevo al jtree: crear un DefaultMutableTreeNode y agregarlo como hijo al nodo correspondiente
                     jlabelCrearArchivo.setText("Creado con exito");
