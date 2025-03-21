@@ -104,7 +104,7 @@ public class SistemaArchivos {
         return false;
     }
 
-    public boolean crearDirectorio(String ruta, String nombre, int tamaño, String permisos) {
+    public boolean crearDirectorio(String ruta, String nombre) {
         if (!esAdministrador) {
             System.out.println("Acceso denegado. Solo el administrador puede crear directorios.");
             return false;
@@ -115,6 +115,7 @@ public class SistemaArchivos {
             Directorio nuevoDirectorio = new Directorio(nombre);
             directorioPadre.agregarSubdirectorio(nuevoDirectorio);
             System.out.println("Directorio creado exitosamente.");
+            return true;
         } else {
             System.out.println("El directorio especificado no existe.");
         }
