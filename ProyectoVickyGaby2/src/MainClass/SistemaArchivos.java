@@ -186,7 +186,7 @@ public class SistemaArchivos {
         disco.mostrarEstado();
     }
 
-    private Directorio buscarDirectorio(String ruta) {
+    public Directorio buscarDirectorio(String ruta) {
         ruta = ruta.replace("[", "");
         ruta = ruta.replace("]", "");
         if (ruta.equals("root")) {
@@ -213,7 +213,7 @@ public class SistemaArchivos {
         return actual;
     }
 
-    private Archivo obtenerArchivo(Directorio directorio, String nombreArchivo) {
+    public Archivo obtenerArchivo(Directorio directorio, String nombreArchivo) {
         for (int i = 0; i < directorio.getArchivos().getSize(); i++) {
             Archivo archivo = (Archivo) directorio.getArchivos().get(i);
             if (archivo.getNombre().equals(nombreArchivo)) {
