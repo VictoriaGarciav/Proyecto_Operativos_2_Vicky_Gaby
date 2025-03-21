@@ -139,6 +139,40 @@ public class SistemaArchivos {
         }
         
     }
+    
+    public boolean actualizarDirectorio(String ruta, String nombreViejo, String nuevoNombre) {
+        if (!esAdministrador) {
+            System.out.println("Acceso denegado. Solo el administrador puede actualizar directorios.");
+            return false;
+        }
+
+        Directorio directorioPadre = buscarDirectorio(ruta);
+        if (directorioPadre != null) {
+            // Buscar el directorio dentro del directorio padre
+            Directorio directorioAActualizar = null;
+            for (int i = 0; i < directorioPadre.getSubdirectorios().getSize(); i++) {
+                Directorio dir = (Directorio) directorioPadre.getSubdirectorios().get(i);
+                if (dir.getNombre().equals(nombreViejo)) {
+                    directorioAActualizar = dir;
+                    break;
+                }
+            }
+
+            if (directorioAActualizar != null) {
+                // Cambiar la información del directorio
+                directorioAActualizar.setNombre(nuevoNombre);  // Actualizamos el nombre
+                
+                System.out.println("Directorio actualizado exitosamente.");
+                return true;
+            } else {
+                System.out.println("No se encontró el directorio a actualizar.");
+                return false;
+            }
+        } else {
+            System.out.println("El directorio especificado no existe.");
+            return false;
+        }
+    }
 
     public void mostrarEstructura() {
         raiz.mostrarEstructura();

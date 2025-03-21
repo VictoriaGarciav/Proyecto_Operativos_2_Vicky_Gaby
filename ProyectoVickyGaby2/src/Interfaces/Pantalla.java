@@ -61,6 +61,8 @@ public class Pantalla extends javax.swing.JFrame {
         jlabelAdminUser = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jlabelCrearArchivo = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        NuevoNombre = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,7 +79,6 @@ public class Pantalla extends javax.swing.JFrame {
 
         jLabel2.setText("Tamaño Archivo:");
 
-        jTextFieldNombreB.setText("jTextField1");
         jTextFieldNombreB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldNombreBActionPerformed(evt);
@@ -122,6 +123,9 @@ public class Pantalla extends javax.swing.JFrame {
 
         jlabelCrearArchivo.setText("Status: OK");
 
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel7.setText("Actualizar:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -155,19 +159,26 @@ public class Pantalla extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 19, Short.MAX_VALUE)
-                                .addComponent(jLabel3)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(12, 12, 12)
-                                        .addComponent(jlabelCrearArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(93, 93, 93))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jButton1)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton2)
-                                        .addGap(43, 43, 43)))))
+                                        .addComponent(jLabel3)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(12, 12, 12)
+                                                .addComponent(jlabelCrearArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGap(93, 93, 93))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jButton1)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLabel4)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jButton2)
+                                                .addGap(43, 43, 43))))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(NuevoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton3)
@@ -202,6 +213,10 @@ public class Pantalla extends javax.swing.JFrame {
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jlabelCrearArchivo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(NuevoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jlabelAdminUser)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -299,6 +314,39 @@ public class Pantalla extends javax.swing.JFrame {
                     }
                 } else {
                     jlabelCrearArchivo.setText("Selecciona un directorio para eliminar");
+                }
+            }
+            
+            if (ComboBoxCRUD.getSelectedItem().toString().equals("Actualizar")) {
+                if (tp != null) {
+                    // Obtener el nodo seleccionado (el directorio que se quiere actualizar)
+                    DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
+
+                    // Obtener el nombre del directorio actual y la nueva información
+                    String nombreDirectorio = selectedNode.toString();
+                    String nuevoNombre;  // Tomamos el nuevo nombre
+                    nuevoNombre = NuevoNombre.getText();
+                    
+                    
+
+                    // Llamamos al método de actualización en el backend
+                    boolean status = sistema.actualizarDirectorio("root", nombreDirectorio, nuevoNombre);
+
+                    if (status) {
+                        // Si la actualización fue exitosa, actualizamos el nombre en el JTree
+                        selectedNode.setUserObject(nuevoNombre);
+
+                        // Refrescar el modelo del JTree para reflejar el cambio
+                        DefaultTreeModel model = (DefaultTreeModel) jtreeArchivos.getModel();
+                        model.reload();
+
+                        // Mensaje de éxito
+                        jlabelCrearArchivo.setText("Directorio actualizado con éxito");
+                    } else {
+                        jlabelCrearArchivo.setText("Error al actualizar el directorio");
+                    }
+                } else {
+                    jlabelCrearArchivo.setText("Selecciona un directorio para actualizar");
                 }
             }
         
@@ -526,6 +574,7 @@ public class Pantalla extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboBoxCRUD;
+    private javax.swing.JTextField NuevoNombre;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -535,6 +584,7 @@ public class Pantalla extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinnerTamanoArchivo;
