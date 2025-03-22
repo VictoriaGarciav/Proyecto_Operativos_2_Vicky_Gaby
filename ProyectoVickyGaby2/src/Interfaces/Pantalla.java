@@ -17,7 +17,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JButton;
@@ -180,7 +182,7 @@ public class Pantalla extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 336, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,7 +203,7 @@ public class Pantalla extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(45, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
@@ -216,61 +218,60 @@ public class Pantalla extends javax.swing.JFrame {
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(NuevoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(132, 132, 132))))
+                                .addGap(150, 150, 150))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(146, 146, 146)
+                                .addComponent(jLabel5))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(146, 146, 146)
-                                        .addComponent(jLabel5))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(31, 31, 31)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jButton3)
-                                            .addComponent(jlabelAdminUser)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(68, 68, 68)
-                                        .addComponent(ComboBoxCRUD, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(87, 87, 87)
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(73, 73, 73)
-                                        .addComponent(jLabel6)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextFieldNombreB, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(59, 59, 59)
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jSpinnerTamanoArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(115, 115, 115)
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 117, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jlabelCrearArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jButton4)
-                        .addGap(259, 259, 259))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22))))
+                                    .addComponent(jButton3)
+                                    .addComponent(jlabelAdminUser)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(68, 68, 68)
+                                .addComponent(ComboBoxCRUD, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(87, 87, 87)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(73, 73, 73)
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldNombreB, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(59, 59, 59)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jSpinnerTamanoArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)))
+                .addGap(697, 697, 697))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(418, 418, 418)
-                        .addComponent(jButtonTransfer))
+                        .addGap(19, 19, 19)
+                        .addComponent(jlabelCrearArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(299, 299, 299)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(107, 107, 107)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(9, 9, 9)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(20, 20, 20))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton4)
+                .addGap(171, 171, 171))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(316, 316, 316)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(430, 430, 430)
+                        .addComponent(jButtonTransfer)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -304,18 +305,16 @@ public class Pantalla extends javax.swing.JFrame {
                             .addComponent(jButton2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jlabelCrearArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(7, 7, 7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(13, 13, 13)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(NuevoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton4)
                 .addGap(2, 2, 2)
                 .addComponent(jButtonTransfer)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -987,78 +986,142 @@ public class Pantalla extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonTransferActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-    jButton4.addActionListener(new ActionListener() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        TreePath tp = jtreeArchivos.getSelectionPath();
-        if (tp != null) {
-            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
-            String archivoInfo = selectedNode.toString();
+//    jButton4.addActionListener(new ActionListener() {
+//    @Override
+//    public void actionPerformed(ActionEvent e) {
+//        TreePath tp = jtreeArchivos.getSelectionPath();
+//        if (tp != null) {
+//            DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
+//            String archivoInfo = selectedNode.toString();
+//
+//            // Extraer el nombre del archivo (antes del paréntesis)
+//            String nombreArchivo = archivoInfo.contains("(")
+//                    ? archivoInfo.substring(0, archivoInfo.indexOf("(")).trim()
+//                    : archivoInfo.trim();
+//
+//            // Obtener el primer bloque asignado
+//            int primerBloque = sistema.obtenerPrimerBloque(nombreArchivo);
+//
+//            // Crear lista de bloques encadenados
+//            List<Integer> bloquesArchivo = new ArrayList<>();
+//            int actual = primerBloque;
+//            while (actual != -1) {
+//                bloquesArchivo.add(actual);
+//                actual = sistema.getDisco().getBloques()[actual].getSiguiente();
+//            }
+//
+//            // Pintar en el jPanel2
+//            Graphics g = jPanel2.getGraphics();
+//            g.setColor(Color.WHITE);  // Limpiar antes
+//            g.fillRect(0, 0, jPanel2.getWidth(), jPanel2.getHeight());
+//
+//            int x1 = 20;
+//            int y1 = 40;
+//            int ancho = 60;
+//            int alto = 40;
+//            Random rand = new Random();
+//
+//            // Pintar bloques ocupados y libres
+//            for (int i = 0; i < 20; i++) {
+//                // Verificar si el bloque está ocupado o libre
+//                boolean bloqueOcupado = false;
+//
+//                // Si el bloque está en la lista de bloques asignados, está ocupado
+//                if (bloquesArchivo.contains(i)) {
+//                    bloqueOcupado = true;
+//                }
+//
+//                // Pintar el bloque
+//                if (bloqueOcupado) {
+//                    // Bloques ocupados (color aleatorio)
+//                    g.setColor(new Color(rand.nextInt(200), rand.nextInt(200), rand.nextInt(200)));
+//                } else {
+//                    // Bloques libres (color gris)
+//                    g.setColor(Color.GRAY);
+//                }
+//
+//                g.fillRect(x1, y1, ancho, alto);
+//                g.setColor(Color.BLACK);
+//                g.drawRect(x1, y1, ancho, alto);
+//                g.drawString("Bloque " + i, x1 + 5, y1 + 25);
+//
+//                x1 += ancho + 10;
+//
+//                // Si se sale del panel, saltar línea
+//                if (x1 + ancho > jPanel2.getWidth()) {
+//                    x1 = 20;
+//                    y1 += alto + 20;
+//                }
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Selecciona un archivo para visualizar bloques.");
+//        }
+//    }
+//});
+        TreePath[] selectedPaths = jtreeArchivos.getSelectionPaths(); // Permite seleccionar múltiples archivos
 
-            // Extraer el nombre del archivo (antes del paréntesis)
-            String nombreArchivo = archivoInfo.contains("(")
-                    ? archivoInfo.substring(0, archivoInfo.indexOf("(")).trim()
-                    : archivoInfo.trim();
+    if (selectedPaths == null || selectedPaths.length == 0) {
+        JOptionPane.showMessageDialog(null, "Selecciona al menos un archivo para visualizar bloques.");
+        return;
+    }
 
-            // Obtener el primer bloque asignado
-            int primerBloque = sistema.obtenerPrimerBloque(nombreArchivo);
+    Set<Integer> bloquesOcupados = new HashSet<>(); // Guardar los bloques ocupados
 
-            // Crear lista de bloques encadenados
-            List<Integer> bloquesArchivo = new ArrayList<>();
-            int actual = primerBloque;
-            while (actual != -1) {
-                bloquesArchivo.add(actual);
-                actual = sistema.getDisco().getBloques()[actual].getSiguiente();
-            }
+    // Iterar sobre los archivos seleccionados
+    for (TreePath tp : selectedPaths) {
+        DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
+        String archivoInfo = selectedNode.toString();
 
-            // Pintar en el jPanel2
-            Graphics g = jPanel2.getGraphics();
-            g.setColor(Color.WHITE);  // Limpiar antes
-            g.fillRect(0, 0, jPanel2.getWidth(), jPanel2.getHeight());
+        // Extraer el nombre del archivo (antes del paréntesis)
+        String nombreArchivo = archivoInfo.contains("(")
+                ? archivoInfo.substring(0, archivoInfo.indexOf("(")).trim()
+                : archivoInfo.trim();
 
-            int x1 = 20;
-            int y1 = 40;
-            int ancho = 60;
-            int alto = 40;
-            Random rand = new Random();
+        // Obtener el primer bloque asignado
+        int primerBloque = sistema.obtenerPrimerBloque(nombreArchivo);
 
-            // Pintar bloques ocupados y libres
-            for (int i = 0; i < 20; i++) {
-                // Verificar si el bloque está ocupado o libre
-                boolean bloqueOcupado = false;
-
-                // Si el bloque está en la lista de bloques asignados, está ocupado
-                if (bloquesArchivo.contains(i)) {
-                    bloqueOcupado = true;
-                }
-
-                // Pintar el bloque
-                if (bloqueOcupado) {
-                    // Bloques ocupados (color aleatorio)
-                    g.setColor(new Color(rand.nextInt(200), rand.nextInt(200), rand.nextInt(200)));
-                } else {
-                    // Bloques libres (color gris)
-                    g.setColor(Color.GRAY);
-                }
-
-                g.fillRect(x1, y1, ancho, alto);
-                g.setColor(Color.BLACK);
-                g.drawRect(x1, y1, ancho, alto);
-                g.drawString("Bloque " + i, x1 + 5, y1 + 25);
-
-                x1 += ancho + 10;
-
-                // Si se sale del panel, saltar línea
-                if (x1 + ancho > jPanel2.getWidth()) {
-                    x1 = 20;
-                    y1 += alto + 20;
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecciona un archivo para visualizar bloques.");
+        // Recorrer los bloques encadenados del archivo y agregarlos a la lista de ocupados
+        int actual = primerBloque;
+        while (actual != -1) {
+            bloquesOcupados.add(actual);
+            actual = sistema.getDisco().getBloques()[actual].getSiguiente();
         }
     }
-});
+
+    // Redibujar los bloques en el jPanel2
+    Graphics g = jPanel2.getGraphics();
+    g.setColor(Color.WHITE);
+    g.fillRect(0, 0, jPanel2.getWidth(), jPanel2.getHeight());
+
+    // Configurar disposición de los bloques
+    int x1 = 20;
+    int y1 = 40;
+    int ancho = 60;
+    int alto = 40;
+    int columnas = 5;  // Máximo de 5 bloques por fila
+
+    for (int i = 0; i < 21; i++) {
+        // Determinar color del bloque
+        if (bloquesOcupados.contains(i)) {
+            g.setColor(Color.RED);  // Bloque ocupado
+        } else {
+            g.setColor(Color.GREEN); // Bloque libre
+        }
+
+        g.fillRect(x1, y1, ancho, alto);
+        g.setColor(Color.BLACK);
+        g.drawRect(x1, y1, ancho, alto);
+        g.drawString("Bloque " + i, x1 + 10, y1 + 25);
+
+        // Posicionar siguiente bloque
+        x1 += ancho + 10;
+
+        // Saltar línea si se alcanza el límite de columnas
+        if ((i + 1) % columnas == 0) {
+            x1 = 20;
+            y1 += alto + 20;
+        }
+    }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
