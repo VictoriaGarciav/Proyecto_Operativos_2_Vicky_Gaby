@@ -642,106 +642,58 @@ public class Pantalla extends javax.swing.JFrame {
             }
 
             if (ComboBoxCRUD.getSelectedItem().toString().equals("Eliminar")) {
-                // Primero obtenemos el nodo seleccionado (el directorio o archivo)
                 DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
-                String nombreDirectorio = selectedNode.toString(); // Nombre del directorio seleccionado
-                String ruta = nombreDirectorio;
-
-                // Si el archivo está en el directorio y ya tiene el nombre ingresado en el TextField
-                String nombreArchivo = jTextFieldNombreB.getText().trim();  // Nombre del archivo a eliminar
+                String nombreArchivo = jTextFieldNombreB.getText().trim();
 
                 if (!nombreArchivo.isEmpty()) {
-                    // Comprobar si el archivo existe dentro del directorio
                     Enumeration<TreeNode> children = selectedNode.children();
                     boolean found = false;
 
-                    // Buscar en los hijos del nodo seleccionado
                     while (children.hasMoreElements()) {
                         DefaultMutableTreeNode child = (DefaultMutableTreeNode) children.nextElement();
                         String archivoInfo = child.toString().trim();
 
-                        // Limpiar caracteres extraños en caso de problemas de codificación
-                        archivoInfo = archivoInfo.replaceAll("[^\\x00-\\x7F]", ""); // Eliminar caracteres no ASCII
-
-                        // Imprimir el texto del archivo para depuración
-                        System.out.println("Texto del archivo en el árbol: " + archivoInfo);
-
-                        // Comparar solo el nombre del archivo (sin los detalles adicionales)
                         if (archivoInfo.contains(nombreArchivo)) {
-                            // Si el archivo es encontrado, extraemos el bloque inicial y tamaño
-
-                            // Usamos expresiones regulares para extraer el bloque y tamaño
-                            String bloquePattern = "Bloque:\\s*(\\d+)";  // Expresión regular para el bloque
-                            String tamañoPattern = "(Tama[oá]){1}\\s*:\\s*(\\d+)";  // Expresión regular para tamaño con "Tamao" o "Tamaño"
-
-                            // Buscar el bloque
                             int bloqueInicial = -1;
                             int tamanoArchivo = -1;
 
-                            try {
-                                // Buscar el bloque
-                                Pattern bloqueRegex = Pattern.compile(bloquePattern);
-                                Matcher bloqueMatcher = bloqueRegex.matcher(archivoInfo);
-                                if (bloqueMatcher.find()) {
-                                    String bloqueStr = bloqueMatcher.group(1);
-                                    bloqueInicial = Integer.parseInt(bloqueStr);
-                                    System.out.println("Bloque encontrado: " + bloqueStr);  // Depuración
-                                } else {
-                                    System.out.println("No se encontró el bloque en la cadena.");
-                                }
+                            // Extraer bloque y tamaño usando regex
+                            Matcher bloqueMatcher = Pattern.compile("Bloque:\\s*(\\d+)").matcher(archivoInfo);
+                            Matcher tamanoMatcher = Pattern.compile("(Tama[oá])\\s*:\\s*(\\d+)").matcher(archivoInfo);
 
-                                // Buscar el tamaño
-                                Pattern tamanoRegex = Pattern.compile(tamañoPattern);
-                                Matcher tamanoMatcher = tamanoRegex.matcher(archivoInfo);
-                                if (tamanoMatcher.find()) {
-                                    String tamanoStr = tamanoMatcher.group(2);
-                                    tamanoArchivo = Integer.parseInt(tamanoStr);
-                                    System.out.println("Tamaño encontrado: " + tamanoStr);  // Depuración
-                                } else {
-                                    System.out.println("No se encontró el tamaño en la cadena.");
-                                }
+                            if (bloqueMatcher.find()) {
+                                bloqueInicial = Integer.parseInt(bloqueMatcher.group(1));
+                            }
+                            if (tamanoMatcher.find()) {
+                                tamanoArchivo = Integer.parseInt(tamanoMatcher.group(2));
+                            }
 
-                                // Verifica que se hayan extraído correctamente los valores
-                                if (bloqueInicial != -1 && tamanoArchivo != -1) {
-                                    found = true;
+                            if (bloqueInicial != -1) {
+                                found = true;
+                                // Liberamos los bloques en el disco
+                                sistema.getDisco().liberarBloques(bloqueInicial);
 
-                                    // Llamamos al método para eliminar el archivo en el sistema, ahora con bloque y tamaño
-                                    boolean status = sistema.eliminarArchivo(ruta, nombreArchivo, bloqueInicial, tamanoArchivo);
+                                // Quitamos el archivo del árbol
+                                selectedNode.remove(child);
+                                DefaultTreeModel model = (DefaultTreeModel) jtreeArchivos.getModel();
+                                model.reload(selectedNode);
 
-                                    if (status) {
-                                        // Eliminar el archivo del árbol visualmente
-                                        selectedNode.remove(child);  // Eliminar el nodo (archivo) del árbol
-
-                                        // Recargamos el modelo del árbol para reflejar la eliminación
-                                        DefaultTreeModel model = (DefaultTreeModel) jtreeArchivos.getModel();
-                                        model.reload(selectedNode);  // Recargar el árbol para que los cambios se vean
-
-                                        jlabelCrearArchivo.setText("Archivo eliminado con éxito");
-                                    } else {
-                                        jlabelCrearArchivo.setText("Error al eliminar archivo");
-                                    }
-                                    break;
-                                } else {
-                                    jlabelCrearArchivo.setText("No se pudo extraer correctamente el bloque o tamaño.");
-                                }
-                            } catch (NumberFormatException e) {
-                                // Captura el error de conversión e imprime el error con más detalles
-                                System.out.println("Error al convertir bloque o tamaño: " + e.getMessage());
-                                jlabelCrearArchivo.setText("Error al procesar el archivo.");
+                                jlabelCrearArchivo.setText("Archivo eliminado y bloques liberados");
+                                break;
                             }
                         }
                     }
 
-                    // Si no se encuentra el archivo en los hijos
                     if (!found) {
                         jlabelCrearArchivo.setText("No se encontró el archivo para eliminar");
                     }
                 } else {
-                    jlabelCrearArchivo.setText("Por favor ingresa el nombre del archivo a eliminar");
+                    jlabelCrearArchivo.setText("Ingresa el nombre del archivo a eliminar");
                 }
-//            } else {
-//                jlabelCrearArchivo.setText("Selecciona un directorio para eliminar el archivo");
             }
+
+
+                
 
             if (ComboBoxCRUD.getSelectedItem().toString().equals("Actualizar")) {
                 if (tp != null) {
@@ -1065,45 +1017,54 @@ public class Pantalla extends javax.swing.JFrame {
         return;
     }
 
-    Set<Integer> bloquesOcupados = new HashSet<>(); // Guardar los bloques ocupados
+    Set<Integer> bloquesSeleccionados = new HashSet<>();  // Bloques de archivos seleccionados
+    Set<Integer> bloquesOcupados = new HashSet<>();       // Todos los bloques ocupados del disco
 
-    // Iterar sobre los archivos seleccionados
+    // Recolectar bloques de los archivos seleccionados
     for (TreePath tp : selectedPaths) {
         DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
         String archivoInfo = selectedNode.toString();
 
-        // Extraer el nombre del archivo (antes del paréntesis)
         String nombreArchivo = archivoInfo.contains("(")
                 ? archivoInfo.substring(0, archivoInfo.indexOf("(")).trim()
                 : archivoInfo.trim();
 
-        // Obtener el primer bloque asignado
+        // Obtener primer bloque del archivo
         int primerBloque = sistema.obtenerPrimerBloque(nombreArchivo);
 
-        // Recorrer los bloques encadenados del archivo y agregarlos a la lista de ocupados
+        // Recorrer los bloques encadenados del archivo y guardarlos
         int actual = primerBloque;
         while (actual != -1) {
-            bloquesOcupados.add(actual);
+            bloquesSeleccionados.add(actual);
             actual = sistema.getDisco().getBloques()[actual].getSiguiente();
         }
     }
 
-    // Redibujar los bloques en el jPanel2
+    // También recopilamos todos los bloques ocupados del disco
+    for (int i = 0; i < sistema.getDisco().getBloques().length; i++) {
+        if (sistema.getDisco().getBloques()[i].isOcupado()) {
+            bloquesOcupados.add(i);
+        }
+    }
+
+    // Redibujar en el jPanel2
     Graphics g = jPanel2.getGraphics();
     g.setColor(Color.WHITE);
     g.fillRect(0, 0, jPanel2.getWidth(), jPanel2.getHeight());
 
-    // Configurar disposición de los bloques
+    // Configuración de la cuadrícula
     int x1 = 20;
     int y1 = 40;
     int ancho = 60;
     int alto = 40;
-    int columnas = 5;  // Máximo de 5 bloques por fila
+    int columnas = 5;
 
-    for (int i = 0; i < 21; i++) {
-        // Determinar color del bloque
-        if (bloquesOcupados.contains(i)) {
-            g.setColor(Color.RED);  // Bloque ocupado
+    for (int i = 0; i < sistema.getDisco().getBloques().length; i++) {
+        // Prioridad de color:
+        if (bloquesSeleccionados.contains(i)) {
+            g.setColor(Color.RED);  // Bloque del archivo seleccionado
+        } else if (bloquesOcupados.contains(i)) {
+            g.setColor(Color.BLUE); // Bloque ocupado por otro archivo
         } else {
             g.setColor(Color.GREEN); // Bloque libre
         }
@@ -1115,8 +1076,6 @@ public class Pantalla extends javax.swing.JFrame {
 
         // Posicionar siguiente bloque
         x1 += ancho + 10;
-
-        // Saltar línea si se alcanza el límite de columnas
         if ((i + 1) % columnas == 0) {
             x1 = 20;
             y1 += alto + 20;
