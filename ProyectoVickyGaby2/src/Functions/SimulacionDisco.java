@@ -63,6 +63,8 @@ public class SimulacionDisco {
         }
     }
     
-
+    public Bloque[] getBloques() {
+        return bloques;
+    }
 
     }
