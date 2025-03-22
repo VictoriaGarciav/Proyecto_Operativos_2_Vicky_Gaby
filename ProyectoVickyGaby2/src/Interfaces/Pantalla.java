@@ -739,8 +739,8 @@ public class Pantalla extends javax.swing.JFrame {
                 } else {
                     jlabelCrearArchivo.setText("Por favor ingresa el nombre del archivo a eliminar");
                 }
-            } else {
-                jlabelCrearArchivo.setText("Selecciona un directorio para eliminar el archivo");
+//            } else {
+//                jlabelCrearArchivo.setText("Selecciona un directorio para eliminar el archivo");
             }
 
             if (ComboBoxCRUD.getSelectedItem().toString().equals("Actualizar")) {
