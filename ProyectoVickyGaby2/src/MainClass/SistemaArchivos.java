@@ -85,7 +85,7 @@ public class SistemaArchivos {
         }
     }
 
-    public boolean eliminarArchivo(String ruta, String nombre) {
+    public boolean eliminarArchivo(String ruta, String nombreArchivo, int bloqueInicial, int tamanoArchivo) {
         if (!esAdministrador) {
             System.out.println("Acceso denegado. Solo el administrador puede eliminar archivos.");
             return false;
@@ -93,14 +93,17 @@ public class SistemaArchivos {
 
         Directorio directorio = buscarDirectorio(ruta);
         if (directorio != null) {
-            Archivo archivo = obtenerArchivo(directorio, nombre);
-            if (archivo != null) {
-                disco.liberarBloques(archivo.getBloqueInicial());
-                directorio.eliminarArchivo(nombre);
-                tablaAsignacion.eliminarEntrada(nombre);
+            Archivo archivo = obtenerArchivo(directorio, nombreArchivo);
+
+            // Verificar si el archivo existe y tiene el bloque y tamaño correcto
+            if (archivo != null && archivo.getBloqueInicial() == bloqueInicial && archivo.getTamaño() == tamanoArchivo) {
+                disco.liberarBloques(archivo.getBloqueInicial());  // Liberar los bloques ocupados por el archivo
+                directorio.eliminarArchivo(nombreArchivo);  // Eliminar el archivo del directorio
+                tablaAsignacion.eliminarEntrada(nombreArchivo);  // Eliminar la entrada en la tabla de asignación
                 System.out.println("Archivo eliminado exitosamente.");
+                return true;
             } else {
-                System.out.println("El archivo no existe.");
+                System.out.println("El archivo no coincide con el bloque inicial o tamaño especificado.");
             }
         } else {
             System.out.println("El directorio especificado no existe.");

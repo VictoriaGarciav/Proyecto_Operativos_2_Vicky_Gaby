@@ -11,6 +11,8 @@ import MainClass.Archivo;
 import MainClass.Directorio;
 import MainClass.SistemaArchivos;
 import java.util.Enumeration;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -607,38 +609,91 @@ public class Pantalla extends javax.swing.JFrame {
                     // Buscar en los hijos del nodo seleccionado
                     while (children.hasMoreElements()) {
                         DefaultMutableTreeNode child = (DefaultMutableTreeNode) children.nextElement();
-                        if (child.toString().equalsIgnoreCase(nombreArchivo)) {
-                            // Si el archivo es encontrado, se elimina
-                            selectedNode.remove(child);  // Eliminar el hijo (archivo)
-                            found = true;
-                            break;
+                        String archivoInfo = child.toString().trim();
+
+                        // Limpiar caracteres extraños en caso de problemas de codificación
+                        archivoInfo = archivoInfo.replaceAll("[^\\x00-\\x7F]", ""); // Eliminar caracteres no ASCII
+
+                        // Imprimir el texto del archivo para depuración
+                        System.out.println("Texto del archivo en el árbol: " + archivoInfo);
+
+                        // Comparar solo el nombre del archivo (sin los detalles adicionales)
+                        if (archivoInfo.contains(nombreArchivo)) {
+                            // Si el archivo es encontrado, extraemos el bloque inicial y tamaño
+
+                            // Usamos expresiones regulares para extraer el bloque y tamaño
+                            String bloquePattern = "Bloque:\\s*(\\d+)";  // Expresión regular para el bloque
+                            String tamañoPattern = "(Tama[oá]){1}\\s*:\\s*(\\d+)";  // Expresión regular para tamaño con "Tamao" o "Tamaño"
+
+                            // Buscar el bloque
+                            int bloqueInicial = -1;
+                            int tamanoArchivo = -1;
+
+                            try {
+                                // Buscar el bloque
+                                Pattern bloqueRegex = Pattern.compile(bloquePattern);
+                                Matcher bloqueMatcher = bloqueRegex.matcher(archivoInfo);
+                                if (bloqueMatcher.find()) {
+                                    String bloqueStr = bloqueMatcher.group(1);
+                                    bloqueInicial = Integer.parseInt(bloqueStr);
+                                    System.out.println("Bloque encontrado: " + bloqueStr);  // Depuración
+                                } else {
+                                    System.out.println("No se encontró el bloque en la cadena.");
+                                }
+
+                                // Buscar el tamaño
+                                Pattern tamanoRegex = Pattern.compile(tamañoPattern);
+                                Matcher tamanoMatcher = tamanoRegex.matcher(archivoInfo);
+                                if (tamanoMatcher.find()) {
+                                    String tamanoStr = tamanoMatcher.group(2);
+                                    tamanoArchivo = Integer.parseInt(tamanoStr);
+                                    System.out.println("Tamaño encontrado: " + tamanoStr);  // Depuración
+                                } else {
+                                    System.out.println("No se encontró el tamaño en la cadena.");
+                                }
+
+                                // Verifica que se hayan extraído correctamente los valores
+                                if (bloqueInicial != -1 && tamanoArchivo != -1) {
+                                    found = true;
+
+                                    // Llamamos al método para eliminar el archivo en el sistema, ahora con bloque y tamaño
+                                    boolean status = sistema.eliminarArchivo(ruta, nombreArchivo, bloqueInicial, tamanoArchivo);
+
+                                    if (status) {
+                                        // Eliminar el archivo del árbol visualmente
+                                        selectedNode.remove(child);  // Eliminar el nodo (archivo) del árbol
+
+                                        // Recargamos el modelo del árbol para reflejar la eliminación
+                                        DefaultTreeModel model = (DefaultTreeModel) jtreeArchivos.getModel();
+                                        model.reload(selectedNode);  // Recargar el árbol para que los cambios se vean
+
+                                        jlabelCrearArchivo.setText("Archivo eliminado con éxito");
+                                    } else {
+                                        jlabelCrearArchivo.setText("Error al eliminar archivo");
+                                    }
+                                    break;
+                                } else {
+                                    jlabelCrearArchivo.setText("No se pudo extraer correctamente el bloque o tamaño.");
+                                }
+                            } catch (NumberFormatException e) {
+                                // Captura el error de conversión e imprime el error con más detalles
+                                System.out.println("Error al convertir bloque o tamaño: " + e.getMessage());
+                                jlabelCrearArchivo.setText("Error al procesar el archivo.");
+                            }
                         }
                     }
 
-                    // Si el archivo fue encontrado y eliminado
-                    if (found) {
-                        // Llamamos al método para eliminar el archivo en el sistema
-                        boolean status = sistema.eliminarArchivo(ruta, nombreArchivo);
-
-                        if (status) {
-                            // Recargamos el modelo del árbol para reflejar la eliminación
-                            DefaultTreeModel model = (DefaultTreeModel) jtreeArchivos.getModel();
-                            model.reload(selectedNode);
-
-                            
-                        } else {
-                            jlabelCrearArchivo.setText("Archivo se elimino,crear otro archivo para ver cambios o actualizar");
-                        }
-                    } else {
+                    // Si no se encuentra el archivo en los hijos
+                    if (!found) {
                         jlabelCrearArchivo.setText("No se encontró el archivo para eliminar");
                     }
-                }else {
+                } else {
                     jlabelCrearArchivo.setText("Por favor ingresa el nombre del archivo a eliminar");
                 }
             } else {
                 jlabelCrearArchivo.setText("Selecciona un directorio para eliminar el archivo");
             }
-        
+
             if (ComboBoxCRUD.getSelectedItem().toString().equals("Actualizar")) {
                 if (tp != null) {
                     DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
@@ -651,34 +706,76 @@ public class Pantalla extends javax.swing.JFrame {
                     int nuevoTamano = (int) jSpinnerTamanoArchivo.getValue(); // Nuevo tamaño
 
                     if (!nombreArchivo.isEmpty() && !nuevoNombre.isEmpty()) {
-                        // Llamar al método actualizar en el sistema
-                        boolean status = sistema.actualizarArchivo(ruta, nombreArchivo, nuevoNombre, nuevoTamano, permisos);
+                        // Llamar al método para actualizar el archivo en el sistema (solo nombre y tamaño)
+                        boolean status = sistema.actualizarArchivo(ruta, nombreArchivo, nuevoNombre, nuevoTamano, null); // No necesitamos cambiar los permisos
 
                         if (status) {
-                            // Si el sistema lo actualiza, actualizamos el nombre del nodo en el JTree
+                            // Si el sistema lo actualiza, actualizamos el nodo en el JTree
                             Enumeration<TreeNode> children = selectedNode.children();
                             boolean found = false;
 
                             while (children.hasMoreElements()) {
                                 DefaultMutableTreeNode child = (DefaultMutableTreeNode) children.nextElement();
-                                if (child.toString().equalsIgnoreCase(nombreArchivo)) {
-                                    // Cambiar el nombre del nodo al nuevo nombre
-                                    child.setUserObject(nuevoNombre);
-                                    found = true;
+                                String archivoInfo = child.toString().trim();
+
+                                // Limpiar caracteres extraños
+                                archivoInfo = archivoInfo.replaceAll("[^\\x00-\\x7F]", ""); // Eliminar caracteres no ASCII
+
+                                // Verificar si el archivo encontrado es el que se está actualizando
+                                if (archivoInfo.contains(nombreArchivo)) {
+                                    // Extraemos el bloque y el tamaño del archivo
+                                    String bloquePattern = "Bloque:\\s*(\\d+)";  // Expresión regular para el bloque
+                                    String tamañoPattern = "(Tama[oá]){1}\\s*:\\s*(\\d+)";  // Expresión regular para tamaño con "Tamao" o "Tamaño"
+
+                                    int bloqueInicial = -1;
+                                    int tamanoArchivo = -1;
+
+                                    try {
+                                        // Buscar el bloque
+                                        Pattern bloqueRegex = Pattern.compile(bloquePattern);
+                                        Matcher bloqueMatcher = bloqueRegex.matcher(archivoInfo);
+                                        if (bloqueMatcher.find()) {
+                                            String bloqueStr = bloqueMatcher.group(1);
+                                            bloqueInicial = Integer.parseInt(bloqueStr);
+                                        }
+
+                                        // Buscar el tamaño
+                                        Pattern tamanoRegex = Pattern.compile(tamañoPattern);
+                                        Matcher tamanoMatcher = tamanoRegex.matcher(archivoInfo);
+                                        if (tamanoMatcher.find()) {
+                                            String tamanoStr = tamanoMatcher.group(2);
+                                            tamanoArchivo = Integer.parseInt(tamanoStr);
+                                        }
+
+                                        // Si ambos valores fueron encontrados, actualizamos el nodo y el archivo
+                                        if (bloqueInicial != -1 && tamanoArchivo != -1) {
+                                            // Actualizar la información en el JTree
+                                            child.setUserObject(nuevoNombre + " (Bloque: " + bloqueInicial + ", Tamaño: " + nuevoTamano + " bloques)");
+                                            found = true;
+                                        }
+
+                                    } catch (NumberFormatException e) {
+                                        System.out.println("Error al convertir bloque o tamaño: " + e.getMessage());
+                                        jlabelCrearArchivo.setText("Error al procesar el archivo.");
+                                    }
+                                }
+
+                                // Si el archivo es encontrado y actualizado, salimos del ciclo
+                                if (found) {
                                     break;
                                 }
                             }
 
-                            // Recargamos el modelo del árbol para ver los cambios
+                            // Recargamos el modelo del árbol para reflejar los cambios
                             if (found) {
                                 DefaultTreeModel model = (DefaultTreeModel) jtreeArchivos.getModel();
-                                model.reload(selectedNode);
+                                model.reload(selectedNode);  // Recargamos el árbol para reflejar la actualización
                                 jlabelCrearArchivo.setText("Archivo actualizado con éxito");
                             } else {
                                 jlabelCrearArchivo.setText("Archivo actualizado en el sistema, pero no encontrado en el árbol");
                             }
                         } else {
-                            jlabelCrearArchivo.setText("Error al actualizar el archivo");
+                            jlabelCrearArchivo.setText("Error al actualizar el archivo en el sistema");
                         }
                     } else {
                         jlabelCrearArchivo.setText("Ingresa el nombre actual y el nuevo nombre del archivo");
@@ -687,6 +784,8 @@ public class Pantalla extends javax.swing.JFrame {
                     jlabelCrearArchivo.setText("Selecciona un directorio o archivo para actualizar");
                 }
             }
+
+            
             if (ComboBoxCRUD.getSelectedItem().toString().equals("Leer")) {
                 if (tp != null) {
                     DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) tp.getLastPathComponent();
